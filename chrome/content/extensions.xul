@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://leechblock/locale/leechblock.dtd">
+
+<overlay id="lb-extensions-overlay"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script type="application/x-javascript" src="extensions.js"/>
+	<script type="application/x-javascript" src="utils.js"/>
+
+</overlay>

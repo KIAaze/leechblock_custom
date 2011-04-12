@@ -1,0 +1,18 @@
+Based on Leechblock by James Anderson:
+http://www.proginosko.com/leechblock.html
+
+Here's a quick little hack I put together, which adds a warning on any non-whitelisted site.
+I also added a context menu for whitelisting or blacklisting.
+
+It's really a quick and ugly hack, so the code can probably be improved a lot.
+The allow, ban and leave buttons on the block page currently also don't work yet.
+
+It's based on Leechblock 0.5.2.
+
+XPI creation:
+Type "make" to create the .xpi (on Windows create a zipfile named leechblock_custom.xpi containing: chrome  chrome.manifest  defaults  history.txt  install.rdf)
+
+Installation:
+Open the .xpi file with firefox
+
+License: GPLv3

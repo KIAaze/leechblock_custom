@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://leechblock/locale/leechblock.dtd">
+
+<overlay id="lb-browser-overlay"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script type="application/x-javascript" src="browser.js"/>
+	<script type="application/x-javascript" src="utils.js"/>
+	<script type="application/x-javascript">
+
+	var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+			.getService(Components.interfaces.nsIPromptService);
+
+	function LeechBlock_alertBlockWarning(set, setName, secsLeft) {
+		if (setName == "") {
+			setName = "&warning.blockSet; " + set;
+		}
+		prompts.alert(null,
+				"&warning.title;",
+				"&warning.alertBlock;".replace(/\$B/, setName).replace(/\$S/, secsLeft));
+	}
+
+	function LeechBlock_getBlockSiteMenuItemLabel(set, setName) {
+		if (setName != "") {
+			return ("&context.blockThisSiteLabel; " + setName);
+		} else {
+			return ("&context.blockThisSiteLabel; &context.blockSet; " + set);
+		}
+	}
+
+	function LeechBlock_getAllowSiteMenuItemLabel(set, setName) {
+		if (setName != "") {
+			return ("&context.allowThisSiteLabel; " + setName);
+		} else {
+			return ("&context.allowThisSiteLabel; &context.blockSet; " + set);
+		}
+	}
+
+	</script>
+
+	<menupopup id="menu_ToolsPopup">
+		<menuseparator insertbefore="prefSep"/>
+		<menu id="lb-tools-menu" label="&tools.leechblock;"
+			insertbefore="prefSep">
+			<menupopup id="lb-tools-menupopup">
+				<menuitem id="lb-tools-lockdown-menuitem" label="&tools.lockdown;"
+					oncommand="LeechBlock_openLockdownDialog();"/>
+				<menuitem id="lb-tools-options-menuitem" label="&tools.options;"
+					oncommand="LeechBlock_openOptionsDialog();"/>
+				<menuitem id="lb-tools-stats-menuitem" label="&tools.stats;"
+					oncommand="LeechBlock_openStatsDialog();"/>
+			</menupopup>
+		</menu>
+	</menupopup>
+
+	<popup id="contentAreaContextMenu">
+  
+		<menuseparator/>
+    
+		<menu id="lb-context-menu-blacklist" label="&context.leechblockBlacklist;">
+			<menupopup id="lb-context-menupopup-block"
+				oncommand="LeechBlock_addSiteToSet(document.commandDispatcher.focusedWindow, event.target.set, false);"
+				onpopupshowing="LeechBlock_prepareContextMenuBlacklist();">
+				<menuseparator/>
+			</menupopup>
+		</menu>
+    
+		<menu id="lb-context-menu-whitelist" label="&context.leechblockWhitelist;">
+			<menupopup id="lb-context-menupopup-allow"
+				oncommand="LeechBlock_addSiteToSet(document.commandDispatcher.focusedWindow, event.target.set, true);"
+				onpopupshowing="LeechBlock_prepareContextMenuWhitelist();">
+				<menuseparator/>
+			</menupopup>
+		</menu>
+    
+		<menu id="lb-context-menu-tools" label="&context.leechblockMain;">
+			<menupopup id="lb-context-menupopup-tools">
+				<menuitem id="lb-context-lockdown-menuitem" label="&context.lockdown;"
+					oncommand="LeechBlock_openLockdownDialog();"/>
+				<menuitem id="lb-context-options-menuitem" label="&context.options;"
+					oncommand="LeechBlock_openOptionsDialog();"/>
+				<menuitem id="lb-context-stats-menuitem" label="&context.stats;"
+					oncommand="LeechBlock_openStatsDialog();"/>
+      </menupopup>
+		</menu>
+	</popup>
+
+	<statusbar id="status-bar">
+		<statusbarpanel id="lb-time-left" hidden="true"
+				tooltiptext="&status.timeLeftTooltip;"/>
+	</statusbar>
+
+</overlay>
